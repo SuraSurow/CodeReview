@@ -30,7 +30,7 @@ public class Game {
         int choice;
         do{
             choice = input.nextInt();
-        }while( choice < 0 || choice >= 3 );
+        }while( choice < 0 || choice > 3 );
         return choice;
     }
 
