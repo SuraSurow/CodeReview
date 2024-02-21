@@ -1,10 +1,30 @@
 package org.example.src.units;
 
 public class Hero extends Unit{
-    protected int maxHeal;
+    protected static int maxHeal = 5;
+    protected static int currentLevel = 1;
     public Hero (String name){
         super(name,100,10);
-        this.maxHeal = 5;
+    }
+
+    @Override
+    public void showStats(){
+        System.out.println(
+                        "Name:"+name
+                        +"\tCurrent Health:"+currentHealth
+                        +"\tMax Damage:"+maxDamage
+                        +"\tMax Health:"+maxHealth
+                        +"\tMax Heal:"+maxHeal
+                        +"\tLevel:"+currentLevel
+        );
+
+    }
+
+    public void levelUp(){
+        currentLevel++;
+        maxHeal+=2;
+        maxHealth+=5;
+        maxDamage+=2;
     }
     public int healPoint(){
         return random.nextInt(1, maxHeal);

@@ -34,8 +34,22 @@ public abstract class Unit {
         currentHealth-=Damage;
     }
     public void giveHit(Unit object){
-        object.getHit(
-                random.nextInt(0,maxDamage)
+        System.out.println(
+                "\t"
+                +this.name
+                +" attack "
+                +object.name
         );
+        int damage = random.nextInt(0,maxDamage);
+        if ( damage == 0) {
+            System.out.print("\tMISS!!!\n");
+        }
+        else {
+            object.getHit(damage);
+            System.out.print("\tDMG = "+damage+"\n");
+        }
+    }
+    public Random giveRandom(){
+        return random;
     }
 }

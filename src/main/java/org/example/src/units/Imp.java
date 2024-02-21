@@ -4,7 +4,7 @@ public class Imp extends Unit {
 
     public Imp()
     {
-        super("Imp",30,25);
+        super("Imp",20,10);
     }
 
 

@@ -1,4 +1,4 @@
-package org.example.src;
+package org.example.src.game;
 
 
 
@@ -10,31 +10,41 @@ import org.example.src.units.Unit;
 
 import java.util.Scanner;
 
-public class Game {
-    protected Hero hero;
-    protected Imp enemy;
+public  class Game {
+    protected static Hero hero ;
+    protected static Imp enemy;
 
-    protected Scanner input;
+    protected static Scanner input = new Scanner(System.in);
 
-    public Game(){
-        input = new Scanner(System.in);
-    }
 
-    protected void setHero(String name){
+
+
+    protected static void setHero(String name){
         hero = new Hero(name);
     }
-    protected void setEnemy(){
+    protected static void setEnemy(){
         enemy = new Imp();
     }
-    protected int getChoice ( Scanner input){
-        int choice;
-        do{
-            choice = input.nextInt();
-        }while( choice < 0 || choice > 3 );
-        return choice;
+    protected static int getChoice ( Scanner input){
+        int choice = input.nextInt();
+        while(true) {
+            try {
+                switch (choice) {
+                    case 1 : case 2 : case 3 : {
+                        return choice;
+                    }
+                    default : {
+                        throw new IllegalArgumentException("Incorrect select!!!TRY AGAIN!!!");
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                input.nextLine();
+            }
+        }
     }
 
-    protected void fight(){
+    protected static void fight(){
         while( hero.isAlive() && enemy.isAlive()) {
             enemy.showStats();
             hero.showStats();
@@ -54,15 +64,17 @@ public class Game {
                     break;
                 }
             }
-            enemy.giveHit(hero);
+            if(enemy.isAlive()){
+                enemy.giveHit(hero);
+            }
         }
     }
-    protected Unit whoWin(){
+    protected static Unit whoWin(){
         if(hero.isAlive())return hero;
         else return enemy;
     }
 
-    public void start(){
+    public static void start(){
         System.out.println("\nNazwij bohatera:");
         String name = input.nextLine();
         setHero(name);
@@ -72,4 +84,3 @@ public class Game {
         whoWin().showStats();
     }
 }
-
