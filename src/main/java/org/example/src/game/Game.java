@@ -25,23 +25,36 @@ public  class Game {
     protected static void setEnemy(){
         enemy = new Imp();
     }
-    protected static int getChoice ( Scanner input){
-        int choice = input.nextInt();
+    protected static void getAction(){
+        upper:
         while(true) {
+            int choice = input.nextInt();
             try {
                 switch (choice) {
-                    case 1 : case 2 : case 3 : {
-                        return choice;
+                    case 1 :{
+                        hero.giveHit(enemy);
+                        break upper;
+                    }
+                    case 2 :{
+                        hero.getHeal();
+                        break upper;
+                    }
+                    case 3 :{
+                        hero.giveUp();
+                        break upper;
                     }
                     default : {
                         throw new IllegalArgumentException("Incorrect select!!!TRY AGAIN!!!");
                     }
                 }
-            } catch (IllegalArgumentException e) {
+            }
+            catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-                input.nextLine();
             }
         }
+            if(enemy.isAlive()){
+                enemy.giveHit(hero);
+            }
     }
 
     protected static void fight(){
@@ -49,24 +62,7 @@ public  class Game {
             enemy.showStats();
             hero.showStats();
             hero.showAction();
-            int user = getChoice(input);
-            switch (user) {
-                case 1: {
-                    hero.giveHit(enemy);
-                    break;
-                }
-                case 2: {
-                    hero.getHeal();
-                    break;
-                }
-                case 3: {
-                    hero.giveUp();
-                    break;
-                }
-            }
-            if(enemy.isAlive()){
-                enemy.giveHit(hero);
-            }
+            getAction();
         }
     }
     protected static Unit whoWin(){
