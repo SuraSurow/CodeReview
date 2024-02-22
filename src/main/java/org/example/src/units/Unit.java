@@ -5,8 +5,6 @@ import java.util.Random;
 
 
 public abstract class Unit {
-
-
     protected Random random;
     protected final String name;
     protected int maxHealth , maxDamage ,currentHealth;
@@ -33,23 +31,19 @@ public abstract class Unit {
     {
         currentHealth-=Damage;
     }
-    public void giveHit(Unit object){
+    public void giveHit(Unit object) {
         System.out.println(
-                "\t"
-                +this.name
-                +" attack "
-                +object.name
+                "\t" +
+                this.name+
+                " attack "+
+                object.name
         );
-        int damage = random.nextInt(0,maxDamage);
-        if ( damage == 0) {
+        int damage = random.nextInt(0, maxDamage);
+        if (damage == 0) {
             System.out.print("\tMISS!!!\n");
-        }
-        else {
+        } else {
             object.getHit(damage);
-            System.out.print("\tDMG = "+damage+"\n");
+            System.out.print("\tDMG = " + damage + "\n");
         }
-    }
-    public Random giveRandom(){
-        return random;
     }
 }
