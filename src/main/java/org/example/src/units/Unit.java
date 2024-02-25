@@ -5,8 +5,6 @@ import java.util.Random;
 
 
 public abstract class Unit {
-
-
     protected Random random;
     protected final String name;
     protected int maxHealth , maxDamage ,currentHealth;
@@ -19,10 +17,9 @@ public abstract class Unit {
         this.random = new Random();
     }
     public void showStats(){
-        System.out.println(
-                "Name: "+name
-                +"\tCurrent Health:"+currentHealth
-                +"\tMax Damage:"+maxDamage
+        System.out.printf(
+                "Name: %1$s\tCurrent Health: %2$s\tMax Damage: %3$s%n",
+                name , currentHealth , maxDamage
         );
     }
     public boolean isAlive() {
@@ -33,23 +30,16 @@ public abstract class Unit {
     {
         currentHealth-=Damage;
     }
-    public void giveHit(Unit object){
-        System.out.println(
-                "\t"
-                +this.name
-                +" attack "
-                +object.name
+    public void giveHit(Unit object) {
+        System.out.printf(
+                "\t %1$s attack %2$s%n", this.name,object.name
         );
-        int damage = random.nextInt(0,maxDamage);
-        if ( damage == 0) {
+        int damage = random.nextInt(0, maxDamage);
+        if (damage == 0) {
             System.out.print("\tMISS!!!\n");
-        }
-        else {
+        } else {
             object.getHit(damage);
-            System.out.print("\tDMG = "+damage+"\n");
+            System.out.print("\tDMG = " + damage + "\n");
         }
-    }
-    public Random giveRandom(){
-        return random;
     }
 }

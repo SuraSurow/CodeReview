@@ -1,29 +1,17 @@
 package org.example.src.game;
-
-
-
-
-
-import org.example.src.units.Hero;
-import org.example.src.units.Imp;
-import org.example.src.units.Unit;
-
+import org.example.src.units.*;
 import java.util.Scanner;
 
 public  class Game {
     protected static Hero hero ;
-    protected static Imp enemy;
+    protected static Unit enemy;
 
     protected static Scanner input = new Scanner(System.in);
-
-
-
-
     protected static void setHero(String name){
         hero = new Hero(name);
     }
-    protected static void setEnemy(){
-        enemy = new Imp();
+    protected static void setEnemy(Unit obj){
+        enemy = obj;
     }
     protected static void getAction(){
         upper:
@@ -52,7 +40,7 @@ public  class Game {
                 System.out.println(e.getMessage());
             }
         }
-            if(enemy.isAlive()){
+            if(enemy.isAlive() && hero.isAlive()){
                 enemy.giveHit(hero);
             }
     }
@@ -70,12 +58,34 @@ public  class Game {
         else return enemy;
     }
 
+    protected static void gameLoop(){
+        while(hero.isAlive()){
+            setEnemy(OpponentSpawner.spawn());
+            fight();
+            if(whoWin()==hero){
+                hero.levelUp();
+                System.out.println(
+                        """
+
+                                \t|Excelent +1 Level|
+                                  ===============================
+                                ===== !!! Start next fight !!! ====
+                                  ===============================
+                                """
+                );
+            }
+            else{
+                System.out.println("\n\tGAME OVER");
+                return;
+            }
+        }
+    }
+
     public static void start(){
-        System.out.println("\nNazwij bohatera:");
+        System.out.println("\nName a Hero:");
         String name = input.nextLine();
         setHero(name);
-        setEnemy();
-        fight();
+        gameLoop();
         System.out.println("\nWinner IS :");
         whoWin().showStats();
     }
