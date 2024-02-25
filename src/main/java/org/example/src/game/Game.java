@@ -65,10 +65,13 @@ public  class Game {
             if(whoWin()==hero){
                 hero.levelUp();
                 System.out.println(
-                        "\n\t|Excelent +1 Level|"+
-                        "\n  ==============================="+
-                        "\n===== !!! Start next fight !!! ===="+
-                        "\n  ===============================\n"
+                        """
+
+                                \t|Excelent +1 Level|
+                                  ===============================
+                                ===== !!! Start next fight !!! ====
+                                  ===============================
+                                """
                 );
             }
             else{
@@ -79,7 +82,7 @@ public  class Game {
     }
 
     public static void start(){
-        System.out.println("\nNazwij bohatera:");
+        System.out.println("\nName a Hero:");
         String name = input.nextLine();
         setHero(name);
         gameLoop();

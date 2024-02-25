@@ -17,10 +17,9 @@ public abstract class Unit {
         this.random = new Random();
     }
     public void showStats(){
-        System.out.println(
-                "Name: "+name
-                +"\tCurrent Health:"+currentHealth
-                +"\tMax Damage:"+maxDamage
+        System.out.printf(
+                "Name: %1$s\tCurrent Health: %2$s\tMax Damage: %3$s%n",
+                name , currentHealth , maxDamage
         );
     }
     public boolean isAlive() {
@@ -32,11 +31,8 @@ public abstract class Unit {
         currentHealth-=Damage;
     }
     public void giveHit(Unit object) {
-        System.out.println(
-                "\t" +
-                this.name+
-                " attack "+
-                object.name
+        System.out.printf(
+                "\t %1$s attack %2$s%n", this.name,object.name
         );
         int damage = random.nextInt(0, maxDamage);
         if (damage == 0) {
