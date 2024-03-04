@@ -29,41 +29,30 @@ public  class Game {
         enemy = obj;
     }
 
+    protected static void getEnemyAction(){
+        if (enemy.isAlive() && hero.isAlive() && !SaveSystem.getIsSave()) {
+            enemy.giveHit(hero);
+        }
+    }
     protected static void getAction() {
-        boolean save;
-        upper:
-        while (true) {
-            save = false;
+        while(true) {
             int choice = input.nextInt();
+            SaveSystem.setIsSave(false);
             try {
                 switch (choice) {
-                    case 1: {
-                        hero.giveHit(enemy);
-                        break upper;
+                    case 1 -> hero.giveHit(enemy);
+                    case 2 -> hero.getHeal();
+                    case 3 -> hero.giveUp();
+                    case 4 -> {
+                        saveSystem.save(enemy, hero);
+                        SaveSystem.setIsSave(true);
                     }
-                    case 2: {
-                        hero.getHeal();
-                        break upper;
-                    }
-                    case 3: {
-                        hero.giveUp();
-                        break upper;
-                    }
-                    case 4: {
-                        saveSystem.save(enemy,hero);
-                        save = true;
-                        break upper;
-                    }
-                    default: {
-                        throw new IllegalArgumentException("Incorrect select!!!TRY AGAIN!!!");
-                    }
+                    default -> throw new IllegalArgumentException("Incorrect select!!!TRY AGAIN!!!");
                 }
+                break;
             } catch (IllegalArgumentException | IOException e) {
                 System.out.println(e.getMessage());
             }
-        }
-        if (enemy.isAlive() && hero.isAlive() && !save) {
-            enemy.giveHit(hero);
         }
     }
 
@@ -73,6 +62,7 @@ public  class Game {
             hero.showStats();
             hero.showAction();
             getAction();
+            getEnemyAction();
         }
     }
 

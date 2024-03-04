@@ -14,6 +14,7 @@ import java.util.Scanner;
 public class SaveSystem {
     protected static  File heroFile;
     protected static Scanner heroFileScanner;
+    protected static boolean isSave = false;
 
     protected static  File unitFile;
     protected static Scanner unitFileScanner;
@@ -48,11 +49,12 @@ public class SaveSystem {
     }
     public Unit loadUnit(){
         List<String>unitArrayList = loadFile(unitFileScanner);
-        return switch (unitArrayList.getFirst()) {
+        String unitName = unitArrayList.getFirst();
+        return switch (unitName) {
             case "Dragon" -> new Dragon(unitArrayList);
             case "Goblin" -> new Goblin(unitArrayList);
             case "Imp" -> new Imp(unitArrayList);
-            default -> null;
+            default -> throw new IllegalArgumentException("Unknown unit type encountered: " + unitName);
         };
     }
     public Hero loadHero(){
@@ -79,4 +81,13 @@ public class SaveSystem {
         }
         return data;
     }
+
+    public static boolean getIsSave() {
+        return isSave;
+    }
+
+    public static void setIsSave(boolean isSave) {
+        SaveSystem.isSave = isSave;
+    }
+
 }
